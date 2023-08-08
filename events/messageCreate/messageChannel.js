@@ -27,7 +27,7 @@ async function chatWithAI(message) {
 
 module.exports = async (client, message) => {
   const activate = getJsonContents().activate;
-  const channelId = 1138257893318197248;
+  const channelId = 875378960555462707;
   if (
     message.channel.id == channelId &&
     activate === true &&
