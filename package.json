@@ -1,0 +1,18 @@
+{
+  "name": "mamadbot",
+  "version": "1.0.0",
+  "description": "a discord bot",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js",
+    "register": "node commands.js"
+  },
+  "author": "Mamad",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^14.12.1",
+    "dotenv": "^16.3.1",
+    "openai": "^3.3.0"
+  }
+}
