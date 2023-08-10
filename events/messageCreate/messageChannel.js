@@ -1,5 +1,5 @@
 const { Configuration, OpenAIApi } = require("openai");
-const { getJsonContents, updateDatas } = require("../../utils/manageDatas");
+const { getValueOf, updateChatDatas } = require("../../utils/manageDatas");
 require("dotenv").config();
 
 const config = new Configuration({
@@ -14,10 +14,7 @@ async function chatWithAI(message) {
       model: "gpt-3.5-turbo",
       messages: message,
     });
-    updateDatas(
-      { role: "user", content: message },
-      { role: "assistant", content: response }
-    );
+    updateChatDatas({ authorId: message.author.id, channelId: message.channel.id }, { role: "user", content: message.content }, { role: "assistant", content: response });
     return response.data.choices[0].text.trim();
   } catch (error) {
     console.error("Error communicating with OpenAI:", error.message);
@@ -26,14 +23,15 @@ async function chatWithAI(message) {
 }
 
 module.exports = async (client, message) => {
-  const activate = getJsonContents().activate;
-  const channelId = 875378960555462707;
-  if (
-    message.channel.id == channelId &&
-    activate === true &&
-    message.author.id !== client.user.id
-  ) {
+  const activate = getValueOf("activateAI");
+  const authorId = message.author.id;
+  const channelId = message.channel.id;
+  const chatObjects = getValueOf("chatObjects");
+  const isSameChatObject = chatObjects.find(chatObject => chatObject.authorId === authorId && chatObject.channelId === channelId);
+
+  if (activate === true && isSameChatObject && authorId !== client.user.id) {
     const response = await chatWithAI(message.content);
     message.channel.send(response);
+    updateChatDatas({ authorId: message.author.id, channelId: message.channel.id }, { role: "user", content: message.content }, { role: "assistant", content: response });
   }
 };

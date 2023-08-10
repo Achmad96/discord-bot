@@ -6,9 +6,7 @@ module.exports = async (client, interaction) => {
 
   const localCommands = getLocalCommands();
   try {
-    const commandObject = localCommands.find(
-      (cmd) => cmd.name === interaction.commandName
-    );
+    const commandObject = localCommands.find(cmd => cmd.name === interaction.commandName);
 
     if (!commandObject) return;
 
@@ -47,7 +45,6 @@ module.exports = async (client, interaction) => {
     if (commandObject.botPermissions?.length) {
       for (const permission of commandObject.botPermissions) {
         const bot = interaction.guild.members.me;
-
         if (!bot.permissions.has(permission)) {
           interaction.reply({
             content: "I don't have enough permissions.",

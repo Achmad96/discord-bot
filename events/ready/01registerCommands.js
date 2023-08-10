@@ -3,20 +3,15 @@ const areCommandsDifferent = require("../../utils/areCommandsDifferent");
 const getApplicationCommands = require("../../utils/getApplicationCommands");
 const getLocalCommands = require("../../utils/getLocalCommands");
 
-module.exports = async (client) => {
+module.exports = async client => {
   try {
     const localCommands = getLocalCommands();
-    const applicationCommands = await getApplicationCommands(
-      client,
-      testServer
-    );
+    const applicationCommands = await getApplicationCommands(client, testServer);
 
     for (const localCommand of localCommands) {
       const { name, description, options } = localCommand;
 
-      const existingCommand = await applicationCommands.cache.find(
-        (cmd) => cmd.name === name
-      );
+      const existingCommand = await applicationCommands.cache.find(cmd => cmd.name === name);
 
       if (existingCommand) {
         if (localCommand.deleted) {
@@ -35,9 +30,7 @@ module.exports = async (client) => {
         }
       } else {
         if (localCommand.deleted) {
-          console.log(
-            `⏩ Skipping registering command "${name}" as it's set to delete.`
-          );
+          console.log(`⏩ Skipping registering command "${name}" as it's set to delete.`);
           continue;
         }
 
@@ -51,6 +44,6 @@ module.exports = async (client) => {
       }
     }
   } catch (error) {
-    console.log(`TThere was an error: ${error}`);
+    console.log(`There was an error: ${error}`);
   }
 };

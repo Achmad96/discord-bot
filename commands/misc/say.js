@@ -1,13 +1,11 @@
-const {
-  ApplicationCommandOptionType,
-  PermissionFlagsBits,
-} = require("discord.js");
+const { ApplicationCommandOptionType, PermissionFlagsBits } = require("discord.js");
 
 module.exports = {
   name: "say",
   description: "say a message",
   // devOnly: Boolean,
-  // deleted: Boolean,
+  // testOnly: Boolean,
+  // deleted: true,
   options: [
     {
       name: "message",
@@ -23,5 +21,6 @@ module.exports = {
       ephemeral: false,
       content: interaction.options.getString("message"),
     });
+    console.log("test");
   },
 };

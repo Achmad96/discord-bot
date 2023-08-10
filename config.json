@@ -1,5 +1,7 @@
 {
   "devs": ["325435317081473026"],
   "testServer": "871691287865221120",
-  "clientId": "1051228977068519565"
+  "clientId": "1051228977068519565",
+  "activateAI": true,
+  "debug": false
 }

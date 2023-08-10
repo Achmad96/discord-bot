@@ -1,43 +1,42 @@
 const { ApplicationCommandOptionType } = require("discord.js");
-const {
-  getJsonContents,
-  updateJsonContents,
-  defaultJsonContent,
-} = require("../../utils/manageDatas");
+const { getValueOf, setValueOf } = require("../../utils/manageDatas");
 
 module.exports = {
   name: "chat",
   description: "Start chat with AI",
-  // testOnly: true,
   // devOnly: Boolean,
+  // testOnly: Boolean,
   // deleted: true,
   options: [
     {
       name: "activate",
-      description: "Turn on/off the ai",
+      description: "Turn on or off the AI chat",
       type: ApplicationCommandOptionType.Boolean,
     },
   ],
   callback: (client, interaction) => {
     try {
-      let jsContents;
-      const value = interaction.options?._hoistedOptions[0]?.value;
-      try {
-        jsContents = getJsonContents();
-        jsContents.activate = value ? value : !jsContents.activate;
-        updateJsonContents(jsContents);
-      } catch (error) {
-        updateJsonContents(defaultJsonContent());
-        console.log(error);
+      const chatObjects = getValueOf("chatObjects") ? getValueOf("chatObjects") : setValueOf("chatObjects", []);
+      const chatObject = {
+        authorId: interaction.user.id,
+        channelId: interaction.channel.id,
+        datas: [],
+      };
+      const isExist = chatObjects.find(obj => obj.authorId === chatObject.authorId);
+
+      if (getValueOf("activateAI")) {
+        if (!isExist) {
+          chatObjects.push(chatObject);
+          interaction.reply("Halo! Apa yang bisa saya bantu?");
+        } else {
+          chatObjects.splice(chatObjects.indexOf(chatObject), 1);
+          interaction.reply("AI dimatikan");
+        }
+      } else {
+        interaction.reply("The AI feature is disabled.");
       }
 
-      if (jsContents?.activate) {
-        interaction.reply("Halo! Apa yang bisa saya bantu?");
-        return;
-      } else if (jsContents?.activate === false) {
-        interaction.reply("AI dimatikan...");
-        return;
-      }
+      setValueOf("chatObjects", chatObjects);
     } catch (e) {
       console.log("ERROR: " + e.message);
     }
