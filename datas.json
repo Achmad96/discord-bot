@@ -1,20 +1,5 @@
 {
   "activateAI": true,
-  "chatObjects": [
-    {
-      "authorId": "325435317081473026",
-      "channelId": "1138257893318197248",
-      "datas": [
-        {
-          "role": "user",
-          "content": "ga ada"
-        },
-        {
-          "role": "assistant",
-          "content": "Maaf, ada masalah dalam berkomunikasi dengan AI saat ini."
-        }
-      ]
-    }
-  ],
+  "chatObjects": [],
   "debugConsole": false
 }
