@@ -9,6 +9,7 @@ module.exports = async (guild, useEmbeded = false, message) => {
     try {
       const name = typeof member.user.globalName === "string" ? member.user.globalName : member.user.username;
       const messages = `${message.replaceAll("[name]", `${name}`)}`;
+      // if (member.user.id === "325435317081473026") {
       if (useEmbeded) {
         const embed = new EmbedBuilder()
           .setColor(0x004e82)
@@ -20,13 +21,26 @@ module.exports = async (guild, useEmbeded = false, message) => {
         member.send({ embeds: [embed] });
       } else member.send(messages);
       console.log(`Sent message to ${name}`);
-
-      const dmChannel = await member.user.createDM();
-      const msgs = await dmChannel.messages.fetch({ limit: 1 });
-      msgs.forEach(msg => msg.delete());
-      console.log("Delete the last message...");
+      // }
     } catch (error) {
       console.log("Error:", error.message);
     }
   });
+
+  setTimeout(() => {
+    members.forEach(async member => {
+      await member.user.createDM().then(dmChannel => {
+        dmChannel.messages.fetch({ limit: 1 }).then(messages => {
+          messages = messages.filter(m => m.author.id !== member.user.id);
+          let c = messages.size;
+          messages.forEach(msg => {
+            msg.delete().then(() => {
+              c--;
+              if (c === 0) console.log(`Deleted the last message from bot in ${member.user.username}`);
+            });
+          });
+        });
+      });
+    });
+  }, 10000);
 };
