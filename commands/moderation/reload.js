@@ -10,6 +10,6 @@ module.exports = {
   botPermissions: [PermissionFlagsBits.Administrator],
 
   callback: async (client, interaction) => {
-    interaction.reply("Reloading commands");
+    interaction.reply("Reload all commands.");
   },
 };
