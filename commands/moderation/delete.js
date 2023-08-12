@@ -1,10 +1,10 @@
 const { ApplicationCommandOptionType, PermissionFlagsBits } = require("discord.js");
-
+let j = 0;
 module.exports = {
-  name: "delete",
+  name: "clear",
   description: "delete messages from channels",
-  // devOnly: Boolean,
-  // testOnly: Boolean,
+  // devOnly: false,
+  // testOnly: false,
   // deleted: true,
   options: [
     {
@@ -19,21 +19,29 @@ module.exports = {
 
   callback: async (client, interaction) => {
     const amount = interaction.options.getInteger("number");
-    try {
-      if (amount >= 100) {
-        const batchSize = 100;
-        const batches = Math.ceil(amount / batchSize);
-        for (let i = 1; i <= batches; i++) {
-          const remainingMessages = amount - i * batchSize;
-          const messagesToDelete = i === batches ? batchSize + remainingMessages : batchSize;
-          interaction.channel.bulkDelete(messagesToDelete);
-        }
-      } else {
-        interaction.channel.bulkDelete(amount);
+    if (amount >= 100) {
+      const batchSize = 100;
+      const batches = Math.ceil(amount / batchSize);
+      for (let i = 1; i <= batches; i++) {
+        const remainingMessages = amount - i * batchSize;
+        const messagesToDelete = i === batches ? batchSize + remainingMessages : batchSize;
+        await interaction.channel
+          .bulkDelete(messagesToDelete, true)
+          .then(() => {
+            j++;
+            console.log(`${j}: Sucessfully deleted ${messagesToDelete} message.`);
+          })
+          .catch(err => console.log("Error: " + err.message));
       }
-      interaction.reply(`deleted ${amount} messages`);
-    } catch (err) {
-      console.log("Error deleting:" + err.message);
+    } else {
+      interaction.channel
+        .bulkDelete(amount, true)
+        .then(() => {
+          j++;
+          console.log(`${j}: Sucessfully deleted ${amount} message.`);
+        })
+        .catch(err => console.log("Error: " + err.message));
     }
+    interaction.reply(`deleted ${amount} messages`);
   },
 };

@@ -9,7 +9,7 @@ module.exports = async (guild, useEmbeded = false, message) => {
     try {
       const name = typeof member.user.globalName === "string" ? member.user.globalName : member.user.username;
       const messages = `${message.replaceAll("[name]", `${name}`)}`;
-      // if (member.user.id === "325435317081473026") {
+      // if (Array.from(process.env.DEVS_ID).includes(member.user.id)) {
       if (useEmbeded) {
         const embed = new EmbedBuilder()
           .setColor(0x004e82)
@@ -42,5 +42,5 @@ module.exports = async (guild, useEmbeded = false, message) => {
         });
       });
     });
-  }, 10000);
+  }, 60000);
 };
