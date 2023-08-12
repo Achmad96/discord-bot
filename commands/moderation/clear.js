@@ -1,5 +1,4 @@
 const { ApplicationCommandOptionType, PermissionFlagsBits } = require("discord.js");
-let j = 0;
 module.exports = {
   name: "clear",
   description: "delete messages from channels",
@@ -19,28 +18,41 @@ module.exports = {
 
   callback: async (client, interaction) => {
     const amount = interaction.options.getInteger("number");
+    let deletedMessagesCount = 0;
     if (amount >= 100) {
       const batchSize = 100;
       const batches = Math.ceil(amount / batchSize);
       for (let i = 1; i <= batches; i++) {
         const remainingMessages = amount - i * batchSize;
         const messagesToDelete = i === batches ? batchSize + remainingMessages : batchSize;
-        await interaction.channel
-          .bulkDelete(messagesToDelete, true)
-          .then(() => {
-            j++;
-            console.log(`${j}: Sucessfully deleted ${messagesToDelete} message.`);
-          })
-          .catch(err => console.log("Error: " + err.message));
+        const deletedMessages = await interaction.channel.bulkDelete(messagesToDelete, true);
+        deletedMessagesCount += deletedMessages.size;
+      }
+
+      while (deletedMessagesCount < amount) {
+        const limit = Math.min(amount - deletedMessagesCount, 100);
+        const msgs = await interaction.channel.messages.fetch({ limit: limit });
+        const size = msgs.size;
+        if (!size) return interaction.reply({ content: "The all of the messages have been deleted", ephemeral: true });
+        for (const msg of msgs.values()) await msg.delete();
+        deletedMessagesCount += size;
+        if (limit !== 100 && deletedMessagesCount < amount) break; // ga ada mesage yg difetch lagi, karena hasil fetch kurang 100 tp kondisi loopnya masih di bawah target, hemat 1 API call
       }
     } else {
-      await interaction.channel
-        .bulkDelete(amount, true)
-        .then(() => {
-          j++;
-          console.log(`${j}: Sucessfully deleted ${amount} message.`);
-        })
-        .catch(err => console.log("Error: " + err.message));
+      const deletedMessages = await interaction.channel.bulkDelete(amount, true);
+      deletedMessagesCount += deletedMessages.size;
+
+      while (deletedMessagesCount < amount) {
+        const limit = Math.min(amount - deletedMessagesCount, 100);
+        const msgs = await interaction.channel.messages.fetch({ limit: limit });
+        const size = msgs.size;
+        if (!size) return interaction.reply({ content: "The all of the messages have been deleted", ephemeral: true });
+        for (const msg of msgs.values()) await msg.delete();
+        deletedMessagesCount += size;
+        if (limit !== 100 && deletedMessagesCount < amount) break; // ga ada mesage yg difetch lagi, karena has
+      }
+
+      console.log(deletedMessages.size());
     }
     interaction.reply(`deleted ${amount} messages`);
   },
