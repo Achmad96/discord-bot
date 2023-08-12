@@ -1,6 +1,6 @@
 const { EmbedBuilder } = require("discord.js");
 
-module.exports = async (guild, useEmbeded = false, message) => {
+module.exports = async (guild, useEmbeded = false, message, deleteToDelay = 0) => {
   const members = await guild.members.fetch().then(m => m.filter(member => !member.user.bot));
   const client = await guild.members.fetch().then(m => m.find(member => member.user.bot && member.user.id === "1138045211713478708"));
   const clientAvatar = client.user.displayAvatarURL({ extension: "png", size: 1024 });
@@ -27,20 +27,22 @@ module.exports = async (guild, useEmbeded = false, message) => {
     }
   });
 
-  setTimeout(() => {
-    members.forEach(async member => {
-      await member.user.createDM().then(dmChannel => {
-        dmChannel.messages.fetch({ limit: 1 }).then(messages => {
-          messages = messages.filter(m => m.author.id !== member.user.id);
-          let c = messages.size;
-          messages.forEach(msg => {
-            msg.delete().then(() => {
-              c--;
-              if (c === 0) console.log(`Deleted the last message from bot in ${member.user.username}`);
+  if (deleteToDelay > 0) {
+    setTimeout(() => {
+      members.forEach(async member => {
+        await member.user.createDM().then(dmChannel => {
+          dmChannel.messages.fetch({ limit: 1 }).then(messages => {
+            messages = messages.filter(m => m.author.id !== member.user.id);
+            let c = messages.size;
+            messages.forEach(msg => {
+              msg.delete().then(() => {
+                c--;
+                if (c === 0) console.log(`Deleted the last message from bot in ${member.user.username}`);
+              });
             });
           });
         });
       });
-    });
-  }, 60000);
+    }, deleteToDelay);
+  }
 };

@@ -1,5 +1,6 @@
 {
   "activateAI": true,
-  "chatObjects": [],
-  "debugConsole": false
+  "debugConsole": false,
+  "tes": "",
+  "chatObjects": []
 }

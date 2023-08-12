@@ -33,7 +33,7 @@ module.exports = {
         const limit = Math.min(amount - deletedMessagesCount, 100);
         const msgs = await interaction.channel.messages.fetch({ limit: limit });
         const size = msgs.size;
-        if (!size) return interaction.reply({ content: "The all of the messages have been deleted", ephemeral: true });
+        if (!size) return interaction.reply(`Deleted ${deletedMessagesCount} messages!`);
         for (const msg of msgs.values()) await msg.delete();
         deletedMessagesCount += size;
         if (limit !== 100 && deletedMessagesCount < amount) break; // ga ada mesage yg difetch lagi, karena hasil fetch kurang 100 tp kondisi loopnya masih di bawah target, hemat 1 API call
@@ -46,14 +46,12 @@ module.exports = {
         const limit = Math.min(amount - deletedMessagesCount, 100);
         const msgs = await interaction.channel.messages.fetch({ limit: limit });
         const size = msgs.size;
-        if (!size) return interaction.reply({ content: "The all of the messages have been deleted", ephemeral: true });
+        if (!size) return interaction.reply(`Deleted ${deletedMessagesCount} messages!`);
         for (const msg of msgs.values()) await msg.delete();
+
         deletedMessagesCount += size;
         if (limit !== 100 && deletedMessagesCount < amount) break; // ga ada mesage yg difetch lagi, karena has
       }
-
-      console.log(deletedMessages.size());
     }
-    interaction.reply(`deleted ${amount} messages`);
   },
 };

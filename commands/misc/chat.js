@@ -12,6 +12,7 @@ module.exports = {
       name: "activate",
       description: "Turn on or off the AI chat",
       type: ApplicationCommandOptionType.Boolean,
+      required: true,
     },
   ],
   callback: (client, interaction) => {

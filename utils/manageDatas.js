@@ -3,10 +3,16 @@ const path = require("path");
 const colorConsole = require("../utils/colorConsole");
 const filePath = path.join(__dirname, "..", "datas.json").split("\\").join("/");
 
+const defaultJsonContent = {
+  activateAI: false,
+  debugConsole: false,
+  chatObjects: [],
+};
+
 const getJsonContents = () => {
   try {
     const fileContent = fs.readFileSync(filePath, "utf8");
-    colorConsole("Get data", "datas.json");
+    // colorConsole("Get data", "datas.json");
     return JSON.parse(fileContent.toString());
   } catch (e) {
     writeJsonContents();
@@ -15,17 +21,10 @@ const getJsonContents = () => {
 };
 
 const writeJsonContents = (content = defaultJsonContent()) => {
-  fs.writeFileSync(filePath, JSON.stringify(sortedKeys(content), null, 2));
-  colorConsole("Write data", "datas.json", `\nCONTENTS: ${JSON.stringify(content, null, 2)}`);
+  const newContent = JSON.stringify(sortObjectKeysBasedOnDefault(validateJsonContent(content)), null, 2);
+  fs.writeFileSync(filePath, newContent);
+  colorConsole("Write data", "datas.json", `\nCONTENTS: ${newContent}`);
   return "Success write contents!";
-};
-
-const defaultJsonContent = () => {
-  return {
-    activateAI: false,
-    chatObjects: [],
-    debugConsole: false,
-  };
 };
 
 const getValueOf = property => {
@@ -71,11 +70,27 @@ const deleteProperty = property => {
   return "Success delete property!";
 };
 
-const sortedKeys = object => {
-  const keys = Object.keys(object).sort();
+const sortObjectKeysBasedOnDefault = object => {
+  const sortedKeys = Object.keys(object).sort((a, b) => {
+    const indexA = Object.keys(defaultJsonContent).indexOf(a);
+    const indexB = Object.keys(defaultJsonContent).indexOf(b);
+    return indexA - indexB;
+  });
+
   const sortedObjects = {};
-  keys.forEach(element => (sortedObjects[element] = object[element]));
+  sortedKeys.forEach(key => (sortedObjects[key] = object[key]));
+
   return sortedObjects;
+};
+
+const validateJsonContent = jsonContent => {
+  Object.keys(defaultJsonContent).forEach(key => {
+    if (!(key in jsonContent)) {
+      jsonContent[key] = defaultJsonContent[key];
+      console.log(`Key ${key}'s not in defaultJsonContent, add it.`);
+    }
+  });
+  return jsonContent;
 };
 
 module.exports = {
