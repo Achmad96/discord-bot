@@ -90,6 +90,14 @@ const validateJsonContent = jsonContent => {
       console.log(`Key ${key}'s not in defaultJsonContent, add it.`);
     }
   });
+
+  Object.keys(jsonContent).forEach(key => {
+    if (!(key in defaultJsonContent)) {
+      delete jsonContent[key];
+      console.log(`Key ${key}'s not in defaultJsonContent, delete it.`);
+    }
+  });
+
   return jsonContent;
 };
 
