@@ -1,13 +1,13 @@
 const { ApplicationCommandOptionType, PermissionFlagsBits } = require("discord.js");
-// const getAllFiles = require("../../utils/getAllFiles");
-// const path = require("path");
-// const getLocalCommands = require("../../utils/getLocalCommands");
+const getAllFiles = require("../../utils/getAllFiles");
+const path = require("path");
+const getLocalCommands = require("../../utils/getLocalCommands");
 const loadCommands = require("../../utils/loadCommands");
 
 module.exports = {
   name: "reload",
   description: "reload scripts",
-  devOnly: true,
+  // devOnly: true,
   // testOnly: Boolean,
   deleted: true,
   options: [
@@ -39,7 +39,8 @@ module.exports = {
     //     }
     //   }
     //   return interaction.reply("Reload all commands.");
-    // } else if (commands.find(cmd => cmd.name === commandName)) {
+    // }
+    // else if (commands.find(cmd => cmd.name === commandName)) {
     //   return interaction.reply(`Reload \`${commandName}\`'s command.`);
     // } else {
     //   return interaction.reply(`There is no command with name \`${commandName}\`!`);

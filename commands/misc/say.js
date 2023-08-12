@@ -21,6 +21,5 @@ module.exports = {
       ephemeral: false,
       content: interaction.options.getString("message"),
     });
-    console.log("test");
   },
 };
