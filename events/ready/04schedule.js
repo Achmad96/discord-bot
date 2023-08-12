@@ -3,8 +3,12 @@ const broadcast = require("../../utils/broadcast");
 
 const delayToDelete = 120000;
 
-const schedule = (date, callback, options) => {
-  cron.schedule(date, callback, options);
+const options = {
+  timezone: "Asia/Jakarta",
+};
+
+const schedule = (date, callback, option = options) => {
+  cron.schedule(date, callback, option);
 };
 
 module.exports = client => {
@@ -12,8 +16,8 @@ module.exports = client => {
 
   if (!guild) return;
 
-  schedule("00 07 * * *", () => broadcast(guild, true, "Selamat pagi [name]-kun!, selamat menjalankan aktivitas", delayToDelete), { timezone: "Indonesia/Jakarta" });
-  schedule("00 12 * * *", () => broadcast(guild, true, "Selamat siang [name]-kun!", delayToDelete), { timezone: "Indonesia/Jakarta" });
-  schedule("00 15 * * *", () => broadcast(guild, true, "Selamat sore [name]-kun!", delayToDelete), { timezone: "Indonesia/Jakarta" });
-  schedule("00 21 * * *", () => broadcast(guild, true, "Selamat malam [name]-kun!, jangan lupa tidur ya...", delayToDelete), { timezone: "Indonesia/Jakarta" });
+  schedule("00 07 * * *", () => broadcast(guild, true, "Selamat pagi [name]-kun!, selamat menjalankan aktivitas", delayToDelete));
+  schedule("00 12 * * *", () => broadcast(guild, true, "Selamat siang [name]-kun!", delayToDelete));
+  schedule("00 15 * * *", () => broadcast(guild, true, "Selamat sore [name]-kun!", delayToDelete));
+  schedule("00 21 * * *", () => broadcast(guild, true, "Selamat malam [name]-kun!, jangan lupa tidur ya...", delayToDelete));
 };
