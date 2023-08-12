@@ -34,7 +34,7 @@ module.exports = {
           .catch(err => console.log("Error: " + err.message));
       }
     } else {
-      interaction.channel
+      await interaction.channel
         .bulkDelete(amount, true)
         .then(() => {
           j++;
