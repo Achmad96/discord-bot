@@ -36,7 +36,7 @@ module.exports = {
         if (!size) return interaction.reply(`Deleted ${deletedMessagesCount} messages!`);
         for (const msg of msgs.values()) await msg.delete();
         deletedMessagesCount += size;
-        if (limit !== 100 && deletedMessagesCount < amount) break; // ga ada mesage yg difetch lagi, karena hasil fetch kurang 100 tp kondisi loopnya masih di bawah target, hemat 1 API call
+        if (limit !== 100 && deletedMessagesCount < amount) break;
       }
     } else {
       const deletedMessages = await interaction.channel.bulkDelete(amount, true);
@@ -50,7 +50,7 @@ module.exports = {
         for (const msg of msgs.values()) await msg.delete();
 
         deletedMessagesCount += size;
-        if (limit !== 100 && deletedMessagesCount < amount) break; // ga ada mesage yg difetch lagi, karena has
+        if (limit !== 100 && deletedMessagesCount < amount) break;
       }
     }
   },
