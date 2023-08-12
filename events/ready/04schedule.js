@@ -1,7 +1,7 @@
 const cron = require("node-cron");
 const broadcast = require("../../utils/broadcast");
 
-const delayToDelete = 6000;
+const delayToDelete = 120000;
 
 module.exports = client => {
   const guild = client.guilds.resolve("871691287865221120");
