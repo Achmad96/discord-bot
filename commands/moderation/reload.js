@@ -9,7 +9,7 @@ module.exports = {
   description: "reload scripts",
   devOnly: true,
   // testOnly: Boolean,
-  // deleted: true,
+  deleted: true,
   options: [
     {
       name: "command",
