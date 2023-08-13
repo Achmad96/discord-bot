@@ -15,5 +15,5 @@ module.exports = (property, ...theValues) => {
       newWords += prop.replace(prop, keywords[i]) + " ";
     }
   });
-  console.log(newWords.trim());
+  console.log("newWords:", newWords.trim());
 };
