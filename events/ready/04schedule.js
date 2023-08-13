@@ -1,7 +1,7 @@
 const cron = require("node-cron");
 const broadcast = require("../../utils/broadcast");
 
-const delayToDelete = 120000;
+const delayToDelete = 300000; // 5 minutes
 
 const options = {
   timezone: "Asia/Jakarta",

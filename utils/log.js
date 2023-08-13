@@ -1,5 +1,5 @@
 const colors = require("colors");
-const keywords = ["GET".red, "ADD".green, "UPDATE".cyan, "DELETE".red, "WRITE".magenta];
+const keywords = ["GET".red, "ADD".green, "UPDATE".cyan, "DELETE".red, "WRITE".magenta, "LOG".bgYellow];
 colors.enable();
 
 module.exports = (property, ...theValues) => {
