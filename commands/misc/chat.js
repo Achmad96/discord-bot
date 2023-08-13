@@ -1,5 +1,6 @@
 const { ApplicationCommandOptionType } = require("discord.js");
 const { getValueOf, setValueOf } = require("../../utils/manageDatas");
+const log = require("../../utils/log");
 
 module.exports = {
   name: "chat",
@@ -39,7 +40,7 @@ module.exports = {
 
       setValueOf("chatObjects", chatObjects);
     } catch (e) {
-      console.log("ERROR: " + e.message);
+      log("ERROR: " + e.message);
     }
   },
 };

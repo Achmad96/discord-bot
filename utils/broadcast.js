@@ -1,4 +1,5 @@
 const { EmbedBuilder } = require("discord.js");
+const log = require("../utils/log");
 
 module.exports = async (guild, useEmbeded = false, message, deleteToDelay = 0) => {
   const members = await guild.members.fetch().then(m => m.filter(member => !member.user.bot));
@@ -20,10 +21,10 @@ module.exports = async (guild, useEmbeded = false, message, deleteToDelay = 0) =
           .setFooter({ text: "Created at" });
         member.send({ embeds: [embed] });
       } else member.send(messages);
-      console.log(`Sent message to ${name}`);
+      log(`Sent message to ${name}`);
       // }
     } catch (error) {
-      console.log("Error:", error.message);
+      log("Error:", error.message);
     }
   });
 

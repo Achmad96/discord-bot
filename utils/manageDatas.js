@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-const colorConsole = require("../utils/colorConsole");
+const log = require("../utils/log");
 const filePath = path.join(__dirname, "..", "datas.json").split("\\").join("/");
 
 const defaultJsonContent = {
@@ -12,18 +12,18 @@ const defaultJsonContent = {
 const getJsonContents = () => {
   try {
     const fileContent = fs.readFileSync(filePath, "utf8");
-    // colorConsole("Get data", "datas.json");
+    // log("Get data", "datas.json");
     return JSON.parse(fileContent.toString());
   } catch (e) {
     writeJsonContents();
-    colorConsole("File content doesn't exist", "creating a new one...");
+    log("File content doesn't exist", "creating a new one...");
   }
 };
 
 const writeJsonContents = (content = defaultJsonContent()) => {
   const newContent = JSON.stringify(sortObjectKeysBasedOnDefault(validateJsonContent(content)), null, 2);
   fs.writeFileSync(filePath, newContent);
-  colorConsole("Write data", "datas.json", `\nCONTENTS: ${newContent}`);
+  log("Write data", "datas.json", `\nCONTENTS: ${newContent}`);
   return "Success write contents!";
 };
 
@@ -87,14 +87,14 @@ const validateJsonContent = jsonContent => {
   Object.keys(defaultJsonContent).forEach(key => {
     if (!(key in jsonContent)) {
       jsonContent[key] = defaultJsonContent[key];
-      console.log(`Key ${key}'s not in defaultJsonContent, add it.`);
+      log(`Key ${key}'s not in defaultJsonContent, add it.`);
     }
   });
 
   Object.keys(jsonContent).forEach(key => {
     if (!(key in defaultJsonContent)) {
       delete jsonContent[key];
-      console.log(`Key ${key}'s not in defaultJsonContent, delete it.`);
+      log(`Key ${key}'s not in defaultJsonContent, delete it.`);
     }
   });
 

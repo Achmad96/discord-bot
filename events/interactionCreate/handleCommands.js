@@ -2,6 +2,7 @@ require("dotenv").config();
 const devs = process.env.DEVS_ID;
 const testServer = process.env.TEST_SERVER;
 const getLocalCommands = require("../../utils/getLocalCommands");
+const log = require("../../utils/log");
 
 module.exports = async (client, interaction) => {
   if (!interaction.isChatInputCommand()) return;
@@ -59,6 +60,6 @@ module.exports = async (client, interaction) => {
 
     await commandObject.callback(client, interaction);
   } catch (error) {
-    console.log(`There was an error running this command: ${error}`);
+    log(`There was an error running this command: ${error}`);
   }
 };
