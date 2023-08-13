@@ -11,6 +11,7 @@ module.exports = function getAllFiles(directory, folderOnly = false) {
       }
     } else {
       if (file.isFile()) {
+        log("Filename:", filenames.name);
         filenames.push(filePath);
       }
     }
