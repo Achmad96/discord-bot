@@ -11,8 +11,8 @@ module.exports = client => {
     const eventName = eventFolder.replace(/\\/g, "/").split("/").pop();
     client.on(eventName, async arg => {
       for (const eventFile of eventFiles) {
-        log(`${eventFile}:`, !eventFile.split("\\").pop().startsWith("--"));
         if (!eventFile.split("\\").pop().startsWith("--")) {
+          log(`Register Event: ${eventFile.split("\\").pop()}`);
           const eventFunction = require(eventFile);
           await eventFunction(client, arg);
         }

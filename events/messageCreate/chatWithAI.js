@@ -1,5 +1,6 @@
 const { Configuration, OpenAIApi } = require("openai");
 const { getValueOf, updateChatDatas } = require("../../utils/manageDatas");
+const log = require("../../utils/log");
 require("dotenv").config();
 
 const config = new Configuration({
@@ -17,7 +18,7 @@ async function chatWithAI(message) {
     updateChatDatas({ authorId: message.author.id, channelId: message.channel.id }, { role: "user", content: message.content }, { role: "assistant", content: response });
     return response.data.choices[0].text.trim();
   } catch (error) {
-    console.error("Error communicating with OpenAI:", error.message);
+    log("Error communicating with OpenAI:", error.message);
     return "Maaf, ada masalah dalam berkomunikasi dengan AI saat ini.";
   }
 }

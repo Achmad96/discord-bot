@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-const log = require("../utils/log");
+const log = require("./log");
 const filePath = path.join(__dirname, "..", "datas.json").split("\\").join("/");
 
 const defaultJsonContent = {
