@@ -3,17 +3,11 @@ const keywords = ["GET".red, "ADD".green, "UPDATE".cyan, "DELETE".red, "WRITE".m
 colors.enable();
 
 module.exports = (property, ...theValues) => {
-  const properties = property.split(" ");
-  if (properties.length <= 0) {
+  const firstWord = property.split(" ")[0];
+  const indexKey = keywords.findIndex(keyword => keyword.toLowerCase().includes(firstWord.toLowerCase()));
+  if (indexKey === undefined) {
     console.log(property.bold.gray, theValues.toString().blue);
     return;
   }
-  let newWords = "";
-  properties.map(prop => {
-    const i = keywords.findIndex(keyword => keyword.toLowerCase().includes(prop));
-    if (i) {
-      newWords += prop.replace(prop, keywords[i]) + " ";
-    }
-  });
-  console.log("newWords:", newWords.trim());
+  console.log(property.replace(firstWord, keywords[indexKey].toString().bold), theValues.toString().blue);
 };
