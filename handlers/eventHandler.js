@@ -11,10 +11,9 @@ module.exports = client => {
     client.on(eventName, async arg => {
       for (const eventFile of eventFiles) {
         const isDisable = eventFile.split("\\").pop().startsWith("--");
-        if (!isDisable) {
-          const eventFunction = require(eventFile);
-          await eventFunction(client, arg);
-        }
+        if (isDisable) continue;
+        const eventFunction = require(eventFile);
+        await eventFunction(client, arg);
       }
     });
   }

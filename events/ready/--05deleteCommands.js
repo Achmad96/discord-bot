@@ -2,6 +2,7 @@ const { REST, Routes } = require("discord.js");
 require("dotenv").config();
 const log = require("../../utils/log");
 const fs = require("fs");
+
 module.exports = () => {
   const rest = new REST().setToken(process.env.BOT_TOKEN);
   const commandsFolder = fs.readdirSync("./commands");
@@ -14,11 +15,11 @@ module.exports = () => {
 
   rest
     .put(Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.TEST_SERVER), { body: [] })
-    .then(() => console.log("Successfully deleted all guild commands."))
+    .then(() => log("Successfully deleted all guild commands."))
     .catch(console.error);
 
   rest
     .put(Routes.applicationCommands(process.env.CLIENT_ID), { body: [] })
-    .then(() => console.log("Successfully deleted all application commands."))
+    .then(() => log("Successfully deleted all application commands."))
     .catch(console.error);
 };
