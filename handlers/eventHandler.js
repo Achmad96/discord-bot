@@ -1,6 +1,5 @@
 const path = require("path");
 const getAllFiles = require("../utils/getAllFiles");
-const log = require("../utils/log");
 
 module.exports = client => {
   const eventFolders = getAllFiles(path.join(__dirname, "..", "events"), true);
@@ -11,9 +10,8 @@ module.exports = client => {
     const eventName = eventFolder.replace(/\\/g, "/").split("/").pop();
     client.on(eventName, async arg => {
       for (const eventFile of eventFiles) {
-        log(`${eventFile.split("\\").pop()}:`, eventFile.split("\\").pop().startsWith("--"));
-        if (!eventFile.split("\\").pop().startsWith("--")) {
-          log(`Event: ${eventFile.split("\\").pop()}`);
+        const isDisable = eventFile.split("\\").pop().startsWith("--");
+        if (!isDisable) {
           const eventFunction = require(eventFile);
           await eventFunction(client, arg);
         }
