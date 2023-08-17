@@ -2,32 +2,54 @@
 
 A simple discord bot with some simple commands.
 
-### Current Available Commands
+<br>
 
-```JavaScript
-const commands = {
-    misc: [
-        {
-            name:"chat",
-            description:"activate chat with AI"
-            required: "Settings your AI in chat gpt"
-        },
-        {
-            name:"say",
-            description:"make the bot say something"
-        },
-        {
-            name:"ping",
-            description:"Check sender's ping"
-        }
-    ],
-    moderation: [
-        {
-            name:"delete",
-            description:"delete the chat with the given number"
-        }
-    ]
-}
+### <code>Commands</code>
 
-console.log(JSON.stringify(commands, null, 2));
-```
+<h3>Moderator & Dev commands</h3>
+<br>
+<code>/reload</code>
+
+> Reload all available commands
+
+<code>/clear</code>
+
+> Clear all the chats
+
+<h3>User commands</h3>
+<br>
+<code>/say</code>
+
+> Make the bot say something
+
+<code>/chat</code>
+
+> Chat with AI gpt
+
+<code>/ping</code>
+
+> Pong the bot
+
+<br>
+
+### <code>.env</code> file configuration
+
+<code>BOT_TOKEN</code>
+
+> Login the bot
+
+<code>CLIENT_ID</code>
+
+> Copy the bot id by turn on developer mode
+
+<code>OPENAI_API_KEY</code>
+
+> Put your ChatGpt Key to activate the AI CHAT
+
+<code>TEST_SERVER</code>
+
+> If you want to test in a server, you can fill it.
+
+<code>DEVS_ID</code>
+
+> Your discord user's id.
