@@ -38,7 +38,7 @@ module.exports = {
       const limit = Math.min(amount - deletedMessagesCount, 100);
       const msgs = await interaction.channel.messages.fetch({ limit: limit });
       const size = msgs.size;
-      if (!size) return interaction.reply({ content: `Deleted the last messages...`, ephemeral: true });
+      if (!size || size === 0) return interaction.reply({ content: `Deleted the last messages...`, ephemeral: true });
       for (const msg of msgs.values()) await msg.delete();
       deletedMessagesCount += size;
       if (limit > 100 && deletedMessagesCount < amount) break;
