@@ -66,7 +66,7 @@ module.exports = async (client, interaction) => {
       }
       const timestamps = cooldowns.get(commandObject.name);
       const defaultCooldownDuration = 3;
-      const cooldownAmount = (commandObject.cooldown ?? defaultCooldownDuration) * 1000;
+      const cooldownAmount = (commandObject.cooldown || defaultCooldownDuration) * 1000;
       const now = Date.now();
 
       if (timestamps.has(interaction.user.id)) {
