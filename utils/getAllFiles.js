@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const log = require("./log");
 module.exports = function getAllFiles(directory, folderOnly = false) {
   let filenames = [];
   const files = fs.readdirSync(directory, { withFileTypes: true });
@@ -11,7 +12,7 @@ module.exports = function getAllFiles(directory, folderOnly = false) {
       }
     } else {
       if (file.isFile()) {
-        log("Filename:", filenames.name);
+        if (file.name.startsWith("--")) continue;
         filenames.push(filePath);
       }
     }

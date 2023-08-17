@@ -33,7 +33,7 @@ module.exports = {
         const limit = Math.min(amount - deletedMessagesCount, 100);
         const msgs = await interaction.channel.messages.fetch({ limit: limit });
         const size = msgs.size;
-        if (!size) return interaction.reply(`Deleted ${deletedMessagesCount} messages!`);
+        if (!size) return;
         for (const msg of msgs.values()) await msg.delete();
         deletedMessagesCount += size;
         if (limit !== 100 && deletedMessagesCount < amount) break;
@@ -46,12 +46,14 @@ module.exports = {
         const limit = Math.min(amount - deletedMessagesCount, 100);
         const msgs = await interaction.channel.messages.fetch({ limit: limit });
         const size = msgs.size;
-        if (!size) return interaction.reply(`Deleted ${deletedMessagesCount} messages!`);
+        if (!size) return;
         for (const msg of msgs.values()) await msg.delete();
 
         deletedMessagesCount += size;
         if (limit !== 100 && deletedMessagesCount < amount) break;
       }
     }
+
+    interaction.reply({ content: `Deleted ${deletedMessagesCount} messages...`, ephemeral: true });
   },
 };
