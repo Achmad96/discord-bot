@@ -10,7 +10,6 @@ module.exports = async (guild, useEmbeded = false, message, deleteToDelay = 0) =
     try {
       const name = typeof member.user.globalName === "string" ? member.user.globalName : member.user.username;
       const messages = `${message.replaceAll("[name]", name)}`;
-      // if (Array.from(process.env.DEVS_ID).includes(member.user.id)) {
       if (useEmbeded) {
         const embed = new EmbedBuilder()
           .setColor(0x004e82)
@@ -22,7 +21,6 @@ module.exports = async (guild, useEmbeded = false, message, deleteToDelay = 0) =
         member.send({ embeds: [embed] });
       } else member.send(messages);
       log(`Sent message to ${name}`);
-      // }
     } catch (error) {
       log("Error:", error.message);
     }
