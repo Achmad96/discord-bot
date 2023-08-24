@@ -28,22 +28,20 @@ module.exports = async (guild, useEmbeded = false, message, deleteToDelay = 0) =
     }
   });
 
-  if (deleteToDelay > 0) {
-    setTimeout(() => {
-      members.forEach(async member => {
-        await member.user.createDM().then(dmChannel => {
-          dmChannel.messages.fetch({ limit: 1 }).then(messages => {
-            messages = messages.filter(m => m.author.id !== member.user.id);
-            let c = messages.size;
-            messages.forEach(msg => {
-              msg.delete().then(() => {
-                c--;
-                if (c === 0) console.log(`Deleted the last message from bot in ${member.user.username}`);
-              });
+  setTimeout(() => {
+    members.forEach(async member => {
+      await member.user.createDM().then(dmChannel => {
+        dmChannel.messages.fetch({ limit: 100 }).then(messages => {
+          messages = messages.filter(m => m.author.id !== member.user.id);
+          let c = messages.size;
+          messages.forEach(msg => {
+            msg.delete().then(() => {
+              c--;
+              if (c === 0) console.log(`Deleted the last message from bot in ${member.user.username}`);
             });
           });
         });
       });
-    }, deleteToDelay);
-  }
+    });
+  }, deleteToDelay);
 };
