@@ -9,7 +9,7 @@ module.exports = async (guild, useEmbeded = false, message, deleteToDelay = 0) =
   members.forEach(async member => {
     try {
       const name = typeof member.user.globalName === "string" ? member.user.globalName : member.user.username;
-      const messages = `${message.replaceAll("[name]", `${name}`)}`;
+      const messages = `${message.replaceAll("[name]", name)}`;
       // if (Array.from(process.env.DEVS_ID).includes(member.user.id)) {
       if (useEmbeded) {
         const embed = new EmbedBuilder()
