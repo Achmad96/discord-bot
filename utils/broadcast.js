@@ -1,7 +1,7 @@
 const { EmbedBuilder } = require("discord.js");
 const log = require("../utils/log");
 
-module.exports = async (guild, useEmbeded = false, message, deleteToDelay = 0) => {
+module.exports = async (guild, message, useEmbeded = false, deleteToDelay = 0) => {
   const members = await guild.members.fetch().then(m => m.filter(member => !member.user.bot));
   const client = await guild.members.fetch().then(m => m.find(member => member.user.bot && member.user.id === "1138045211713478708"));
   const clientAvatar = client.user.displayAvatarURL({ extension: "png", size: 1024 });
@@ -18,7 +18,7 @@ module.exports = async (guild, useEmbeded = false, message, deleteToDelay = 0) =
           .addFields({ name: "Pesan", value: messages + " :grin:" })
           .setTimestamp()
           .setFooter({ text: "Created at" });
-        member.send({ embeds: [embed] });
+        member.send({ embeds: [embed] }).catch(() => console.log(`Can't send message to ${member.user.username}`));
       } else member.send(messages);
       log(`Sent message to ${name}`);
     } catch (error) {

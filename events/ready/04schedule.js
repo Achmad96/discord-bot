@@ -1,7 +1,7 @@
 const cron = require("node-cron");
 const broadcast = require("../../utils/broadcast");
 
-const delayToDelete = 300000; // 5 minutes
+const delayToDelete = 300_000; // 5 minutes
 
 const options = {
   timezone: "Asia/Jakarta",
@@ -16,8 +16,8 @@ module.exports = client => {
 
   if (!guild) return;
 
-  schedule("00 07 * * *", () => broadcast(guild, true, "Selamat pagi [name]-kun!, selamat menjalankan aktivitas", delayToDelete));
-  schedule("00 12 * * *", () => broadcast(guild, true, "Selamat siang [name]-kun!", delayToDelete));
-  schedule("00 15 * * *", () => broadcast(guild, true, "Selamat sore [name]-kun!", delayToDelete));
-  schedule("00 21 * * *", () => broadcast(guild, true, "Selamat malam [name]-kun!, jangan lupa tidur ya...", delayToDelete));
+  schedule("00 07 * * *", () => broadcast(guild, "Selamat pagi [name]-kun!, selamat menjalankan aktivitas", true, delayToDelete));
+  schedule("00 12 * * *", () => broadcast(guild, "Selamat siang [name]-kun!", true, delayToDelete));
+  schedule("00 15 * * *", () => broadcast(guild, "Selamat sore [name]-kun!", true, delayToDelete));
+  schedule("00 21 * * *", () => broadcast(guild, "Selamat malam [name]-kun!, jangan lupa tidur ya...", true, delayToDelete));
 };
