@@ -14,7 +14,7 @@ module.exports = () => {
   }
 
   rest
-    .put(Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.TEST_SERVER), { body: [] })
+    .put(Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.TEST_SERVERS), { body: [] })
     .then(() => log("Successfully deleted all guild commands."))
     .catch(console.error);
 

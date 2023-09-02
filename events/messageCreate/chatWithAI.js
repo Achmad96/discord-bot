@@ -1,5 +1,5 @@
 const { Configuration, OpenAIApi } = require("openai");
-const { getValueOf, updateChatDatas } = require("../../utils/manageDatas");
+const { getValueOf, updateChatDatas } = require("../../utils/dataManager");
 const log = require("../../utils/log");
 require("dotenv").config();
 

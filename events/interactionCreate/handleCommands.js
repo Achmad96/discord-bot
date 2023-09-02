@@ -1,5 +1,5 @@
 require("dotenv").config();
-const devs = process.env.DEVS_ID;
+const devs = process.env.DEVS_ID.split(", ");
 const testServer = process.env.TEST_SERVER;
 const getLocalCommands = require("../../utils/getLocalCommands");
 const log = require("../../utils/log");

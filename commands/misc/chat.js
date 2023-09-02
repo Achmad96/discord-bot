@@ -1,5 +1,5 @@
 const { ApplicationCommandOptionType } = require("discord.js");
-const { getValueOf, setValueOf } = require("../../utils/manageDatas");
+const { getValueOf, setValueOf } = require("../../utils/dataManager");
 const log = require("../../utils/log");
 
 module.exports = {
@@ -17,30 +17,26 @@ module.exports = {
     },
   ],
   callback: (client, interaction) => {
-    try {
-      const chatObjects = getValueOf("chatObjects") ? getValueOf("chatObjects") : setValueOf("chatObjects", []);
-      const chatObject = {
-        authorId: interaction.user.id,
-        channelId: interaction.channel.id,
-        datas: [],
-      };
-      const isExist = chatObjects.find(obj => obj.authorId === chatObject.authorId);
+    const chatObjects = getValueOf("chatObjects") ? getValueOf("chatObjects") : setValueOf("chatObjects", []);
+    const chatObject = {
+      authorId: interaction.user.id,
+      channelId: interaction.channel.id,
+      datas: [],
+    };
+    const isExist = chatObjects.find(obj => obj.authorId === chatObject.authorId);
 
-      if (getValueOf("activateAI")) {
-        if (!isExist) {
-          chatObjects.push(chatObject);
-          interaction.reply("Halo! Apa yang bisa saya bantu?");
-        } else {
-          chatObjects.splice(chatObjects.indexOf(chatObject), 1);
-          interaction.reply("AI dimatikan");
-        }
+    if (getValueOf("activateAI")) {
+      if (!isExist) {
+        chatObjects.push(chatObject);
+        interaction.reply("Halo! Apa yang bisa saya bantu?");
       } else {
-        interaction.reply("The AI feature is disabled.");
+        chatObjects.splice(chatObjects.indexOf(chatObject), 1);
+        interaction.reply("AI dimatikan");
       }
-
-      setValueOf("chatObjects", chatObjects);
-    } catch (e) {
-      log("ERROR: " + e.message);
+    } else {
+      interaction.reply("The AI feature is disabled.");
     }
+
+    setValueOf("chatObjects", chatObjects);
   },
 };

@@ -7,12 +7,12 @@ const defaultJsonContent = {
   activateAI: false,
   debugConsole: false,
   chatObjects: [],
+  servers: [],
 };
 
 const getJsonContents = () => {
   try {
     const fileContent = fs.readFileSync(filePath, "utf8");
-    // log("Get data", "datas.json");
     return JSON.parse(fileContent.toString());
   } catch (e) {
     writeJsonContents();
@@ -23,13 +23,23 @@ const getJsonContents = () => {
 const writeJsonContents = (content = defaultJsonContent()) => {
   const newContent = JSON.stringify(sortObjectKeysBasedOnDefault(validateJsonContent(content)), null, 2);
   fs.writeFileSync(filePath, newContent);
-  log("Write data", "datas.json", `\nCONTENTS: ${newContent}`);
+  log("Write data", "datas.json");
   return "Success write contents!";
 };
 
-const getValueOf = property => {
+const getValueOf = path => {
   const jsonContents = getJsonContents();
-  return jsonContents[property];
+  const keys = path.split(".");
+  let result = jsonContents;
+
+  for (const key of keys) {
+    if (result && typeof result === "object" && key in result) {
+      result = result[key];
+    } else {
+      return undefined;
+    }
+  }
+  return result;
 };
 
 const addProperty = (key, value) => {
@@ -39,14 +49,21 @@ const addProperty = (key, value) => {
   return getValueOf(key);
 };
 
-const setValueOf = (key, newValue) => {
+const setValueOf = (path, newValue) => {
   const jsonContents = getJsonContents();
-  if (getValueOf(key) === undefined) return addProperty(key, newValue);
-  else if (getValueOf(key) !== newValue) {
-    jsonContents[key] = newValue;
-    writeJsonContents(jsonContents);
-    return getValueOf(key);
+  const keys = path.split(".");
+  let currentObj = jsonContents;
+
+  for (let i = 0; i < keys.length - 1; i++) {
+    const key = keys[i];
+    if (!currentObj[key] || typeof currentObj[key] !== "object") {
+      currentObj[key] = {};
+    }
+    currentObj = currentObj[key];
   }
+  const lastKey = keys[keys.length - 1];
+  currentObj[lastKey] = newValue;
+  writeJsonContents(jsonContents);
   return "The property doesn't exist";
 };
 

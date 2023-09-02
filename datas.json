@@ -1,5 +1,6 @@
 {
-  "activateAI": true,
+  "activateAI": false,
   "debugConsole": false,
-  "chatObjects": []
+  "chatObjects": [],
+  "servers": []
 }
