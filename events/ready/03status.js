@@ -1,9 +1,10 @@
 const { ActivityType } = require("discord.js");
 
-module.exports = (client) => {
+module.exports = async client => {
+  const guilds = await client.guilds.cache.map(g => g.name);
   const activitiesName = [
     {
-      name: "Server Kodok",
+      name: guilds[Math.floor(Math.random() * guilds.length)],
       type: ActivityType.Watching,
     },
     {
