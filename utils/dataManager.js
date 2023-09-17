@@ -20,7 +20,7 @@ const getJsonContents = () => {
   }
 };
 
-const writeJsonContents = (content = defaultJsonContent()) => {
+const writeJsonContents = (content = defaultJsonContent) => {
   const newContent = JSON.stringify(sortObjectKeysBasedOnDefault(validateJsonContent(content)), null, 2);
   fs.writeFileSync(filePath, newContent);
   log("Write data", "datas.json");

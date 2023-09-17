@@ -16,7 +16,7 @@ module.exports = async (client, member) => {
       ctx.fillStyle = "#ffffff";
       await loadImage("https://img.freepik.com/premium-vector/programming-code-made-with-binary-code-coding-hacker-background-digital-binary-data-streaming-digital-code_127544-778.jpg").then(img => {
         ctx.drawImage(img, 0, 0, 1024, 500);
-        ctx.fillText("welcome", 360, 360);
+        ctx.fillText("Welcome", 360, 360);
         ctx.beginPath();
         ctx.arc(512, 166, 128, 0, Math.PI * 2, true);
         ctx.stroke();
